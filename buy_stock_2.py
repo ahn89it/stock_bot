@@ -50,17 +50,20 @@ with open(input_json_filename, "r", encoding="utf-8") as json_file:
 
 for Data in DantaDataList:
     current_price = KisKR.GetCurrentPrice(Data['stock_code'])
+    time.sleep(0.5)
     try:
         if (Data['buy_check']) == "False" and (current_price >= Data['target_price']):
+            time.sleep(0.5)
             amt = TargetMoney / float(current_price)
             KisKR.MakeBuyLimitOrder(Data['stock_code'], amt, Data['target_price'], True, "NO")
-            time.sleep(1)
+            time.sleep(0.5)
             Data['buy_check'] = "True"
             print("=============================================================")
             print("시간 : ", time.strftime('%x %X'))
             print(f"종목 코드: {Data['stock_code']}, 현재 가격: {current_price}, 목표가격: {Data['target_price']}")
             print(f"check point: {Data['buy_check']}")
             print("=============================================================")
+            time.sleep(0.5)
     except ValueError:
         print("시간 : ", time.strftime('%x %X'))
         print(f"잘못된 코드: {Data['stock_code']}")

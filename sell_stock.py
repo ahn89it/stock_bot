@@ -29,20 +29,21 @@ try:
 except FileNotFoundError:
     print(f"{source_json_filename} 파일이 존재하지 않습니다. 빈 리스트로 진행합니다.")
 
-time.sleep(1)
+time.sleep(0.5)
 
 for stock_code in stock_code_list:
     try:
+        print("시간 : ", time.strftime('%x %X'))
         stock_amt = next((stock['StockAmt'] for stock in MyStockList if stock['StockCode'] == stock_code), None)
-        time.sleep(1)
+        time.sleep(0.5)
         df = Common.GetOhlcv("KR", stock_code, 2)
-        time.sleep(1)
         start_price = df['open'].iloc[-1]  # 시가
+        time.sleep(0.5)
         KisKR.MakeSellLimitOrder(stock_code, stock_amt, start_price, ErrLog="YES")
         print(stock_code)
         print("stock_amt",stock_amt)
         print("start_price", start_price)
-        time.sleep(1)
+        time.sleep(0.5)
     except ValueError:
         print("시간 : ", time.strftime('%x %X'))
         print(f"잘못된 코드: {[stock_code]}")
